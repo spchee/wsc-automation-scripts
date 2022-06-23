@@ -7,33 +7,33 @@ import time
 browser  = webdriver.Chrome(ChromeDriverManager().install())
 
 browser.get('https://www.warwicksu.com/organisation/tickets/4273/')
-print("yes")
-#sleep 10 seconds
-input("Press Enter to continue...")
+input("Please login then press enter to continue...")
 
 #change value of element id ctl00_ctl00_Main_AdminPageContent_drFilter_txtFromDate element to 01/09/2021
 start_date = browser.find_element(value='ctl00_ctl00_Main_AdminPageContent_drFilter_txtFromDate')
 start_date.clear()
 start_date.send_keys('01/09/2021')
 print(1)
-time.sleep(0.5)
+time.sleep(0.1)
+
 #click button with id ctl00_ctl00_Main_AdminPageContent_btnFilter
 browser.find_element(value='ctl00_ctl00_Main_AdminPageContent_btnFilter').click()
-time.sleep(0.5)
+time.sleep(0.1)
 browser.find_element(value='ctl00_ctl00_Main_AdminPageContent_btnFilter').click()
 time.sleep(1)
+
 #find all elements with the msl-row class
 rows = browser.find_elements_by_class_name('msl_row')
 films = {}
 for row in rows:
-    #get 7th element in the row
+    
     title = (row.find_elements_by_tag_name('td')[1]).text
     title = title.split(' ')[3:-6]
     title = ' '.join(title)
 
     price = float(row.find_elements_by_tag_name('td')[3].text)
 
-    #get the text of the cell
+    
     try:
         sales = int(row.find_elements_by_tag_name('td')[7].text)
     except:
@@ -48,14 +48,14 @@ for row in rows:
 
 rows = browser.find_elements_by_class_name('msl_altrow')
 for row in rows:
-    #get 7th element in the row
+    
     title = (row.find_elements_by_tag_name('td')[1]).text
     title = title.split(' ')[3:-6]
     title = ' '.join(title)
 
     price = float(row.find_elements_by_tag_name('td')[3].text)
 
-    #get the text of the cell
+    
     try:
         sales = int(row.find_elements_by_tag_name('td')[7].text)
     except:
