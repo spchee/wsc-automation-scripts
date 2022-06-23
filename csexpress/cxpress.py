@@ -36,24 +36,35 @@ for film in films:
 #enter movie name id="moviename"
     movie_name = browser.find_element_by_id('moviename')
     movie_name.clear()
-    movie_name.send_keys(film.title)
+    movie_name.send_keys('"' + film.title + '"')
     time.sleep(0.1)
     #submit serach id ="submit1"
-    browser.find_element_by_id('submit1').click()
-    time.sleep(0.1)
+    try:
+        browser.find_element_by_id('submit1').click()
+    except:
+
+        #close current window handle
+        browser.close()
+        time.sleep(0.05)
+        browser.switch_to.window(main_window)
+        print(f'{film.title} not found')
+        time.sleep(0.05)
+        continue
+
+    time.sleep(0.05)
     #click first button id = "button1" (multiple with same id)
     browser.find_element_by_id('button1').click()
-    time.sleep(0.05)
+    time.sleep(0.03)
     browser.switch_to.window(main_window)
-    time.sleep(0.05)
+    time.sleep(0.03)
     #Enter Attributes id="SCREENS$COMMENT"
     comment = browser.find_element_by_id('SCREENS$COMMENT')
     comment.send_keys(film.film_type + " Presentation")
-    time.sleep(0.05)
+    time.sleep(0.03)
     #enter subtitle id="SCREENS$CAPTION"
     subtitle = browser.find_element_by_id('SCREENS$CAPTION')
     subtitle.send_keys(film.sub)
-    time.sleep(0.05)
+    time.sleep(0.03)
     #check if date is a sunday
     day = datetime.datetime.strptime(film.date, '%m/%d/%Y').weekday()
     time1 = ""
